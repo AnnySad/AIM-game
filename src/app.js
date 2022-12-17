@@ -29,6 +29,26 @@ board.addEventListener('click', event => {
 })
 
 
+const colors = ['#d95656', '#de9320', '#7ebb45', '#14d9cf', '#41aec7', '#1424d9', '#7845c5', '#c532da', '#4d0641', '#d21425']
+
+function setColor(event) {
+    const element = event.target
+    const color = getColorRandom()
+    element.style.backgroundColor =color
+    element.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`
+}
+
+function getColorRandom() {
+    const index = Math.floor(Math.random() * colors.length)
+    return colors[index]
+}
+function removeColor(event) {
+    const element = event.target
+    element.style.backgroundColor = '#1d1d1d'
+    element.style.boxShadow = `0 0 2px #000`
+}
+
+
 function startGame() {
     setInterval(decreaseTime, 1000)
     createRandomCircle()
@@ -37,7 +57,7 @@ function startGame() {
 
 function finishGame() {
     timeEL.parentNode.classList.add('hide')
-board.innerHTML = `<h1> Cчет: <span class="primary">${score}</span></h1>`
+    board.innerHTML = `<h1> Cчет: <span class="primary">${score}</span></h1>`
 }
 
 function decreaseTime() {
@@ -71,9 +91,13 @@ function createRandomCircle() {
     circle.style.top = `${y}px`
     circle.style.left = `${x}px`
 
+    circle.addEventListener('mouseover', setColor)
+    circle.addEventListener('mouseleave', removeColor)
     board.append(circle)
 }
 
 function getRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min)
 }
+
+

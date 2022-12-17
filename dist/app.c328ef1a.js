@@ -143,6 +143,22 @@ board.addEventListener('click', function (event) {
     createRandomCircle();
   }
 });
+var colors = ['#d95656', '#de9320', '#7ebb45', '#14d9cf', '#41aec7', '#1424d9', '#7845c5', '#c532da', '#4d0641', '#d21425'];
+function setColor(event) {
+  var element = event.target;
+  var color = getColorRandom();
+  element.style.backgroundColor = color;
+  element.style.boxShadow = "0 0 2px ".concat(color, ", 0 0 10px ").concat(color);
+}
+function getColorRandom() {
+  var index = Math.floor(Math.random() * colors.length);
+  return colors[index];
+}
+function removeColor(event) {
+  var element = event.target;
+  element.style.backgroundColor = '#1d1d1d';
+  element.style.boxShadow = "0 0 2px #000";
+}
 function startGame() {
   setInterval(decreaseTime, 1000);
   createRandomCircle();
@@ -179,6 +195,8 @@ function createRandomCircle() {
   circle.style.height = "".concat(size, "px");
   circle.style.top = "".concat(y, "px");
   circle.style.left = "".concat(x, "px");
+  circle.addEventListener('mouseover', setColor);
+  circle.addEventListener('mouseleave', removeColor);
   board.append(circle);
 }
 function getRandomNumber(min, max) {
@@ -209,7 +227,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51146" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56683" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
